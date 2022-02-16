@@ -29,4 +29,4 @@ storage.remount('/', readonly=False)
 os.remove('boot.py')
 ```
 
-And press ctrl+c
+And press the reset button
