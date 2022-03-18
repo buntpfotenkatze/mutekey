@@ -1,17 +1,20 @@
 from adafruit_hid.keycode import Keycode
 
+# repository:
+# https://github.com/buntpfotenkatze/mutekey
+
 # you can enable this for release builds
 # WARNING: it's annoying to disable this again
 hideMassStorage = False
 
-# keep the LED on when disabling rainbow mode
+# keep the LED on when disabling colorwheel mode
 keepLedOn = True
 
 # brightness of the LED
 brightness = 0.3
 
-# speed of the rainbow changing
-rainbowSpeed = 0.4
+# speed of the colorwheel
+colorwheelSpeed = 0.4
 
 # color of the LED when muted. default: red
 muteColor = 0xFF0000

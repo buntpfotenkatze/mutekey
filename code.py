@@ -23,7 +23,7 @@ colorwheel = 0
 muted = False
 buttonStillPressed = True
 touchStillPressed = False
-showRainbow = True
+showColorwheel = True
 
 print("neokey up")
 
@@ -48,14 +48,14 @@ while True:
 
     if touch.value and not muted and not touchStillPressed:
         touchStillPressed = True
-        showRainbow = not showRainbow
+        showColorwheel = not showColorwheel
 
     if touchStillPressed and not touch.value:
         touchStillPressed = False
 
     if not muted:
-        if showRainbow:
-            colorwheel = (colorwheel + config.rainbowSpeed) % 255
+        if showColorwheel:
+            colorwheel = (colorwheel + config.colorwheelSpeed) % 255
             pixel[0] = rainbowio.colorwheel(colorwheel)
         elif not config.keepLedOn:
             pixel[0] = 0x0
