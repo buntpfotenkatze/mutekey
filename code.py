@@ -8,8 +8,6 @@ import usb_hid
 import config
 from adafruit_hid.keyboard import Keyboard
 
-kbd = Keyboard(usb_hid.devices)
-
 pixel = neopixel.NeoPixel(board.NEOPIXEL, 1)
 pixel.brightness = config.brightness
 
@@ -32,17 +30,23 @@ while True:
     if button.value and not buttonStillPressed:
         buttonStillPressed = True
         muted = not muted
-        if muted:
-            for key in config.muteKeyCombination:
-                kbd.press(key)
-            time.sleep(0.01)
-            kbd.release_all()
-            pixel[0] = config.muteColor
-        else:
-            for key in config.unmuteKeyCombination:
-                kbd.press(key)
-            time.sleep(0.01)
-            kbd.release_all()
+        try:
+            if muted:
+                pixel[0] = config.muteColor
+
+                kbd = Keyboard(usb_hid.devices)
+                for key in config.muteKeyCombination:
+                    kbd.press(key)
+                time.sleep(0.01)
+                kbd.release_all()
+            else:
+                kbd = Keyboard(usb_hid.devices)
+                for key in config.unmuteKeyCombination:
+                    kbd.press(key)
+                time.sleep(0.01)
+                kbd.release_all()
+        except:
+            print("failed to use keyboard")
 
     if buttonStillPressed and not button.value:
         buttonStillPressed = False
