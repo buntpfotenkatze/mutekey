@@ -19,6 +19,7 @@ button.pull = digitalio.Pull.DOWN
 
 touch = touchio.TouchIn(board.TOUCH)
 
+cachedColor = 0x00FF00
 colorwheel = 0
 muted = False
 buttonStillPressed = True
@@ -49,6 +50,8 @@ while True:
     if touch.value and not muted and not touchStillPressed:
         touchStillPressed = True
         showColorwheel = not showColorwheel
+        if not showColorwheel:
+            cachedColor = pixel[0]
 
     if touchStillPressed and not touch.value:
         touchStillPressed = False
@@ -57,7 +60,9 @@ while True:
         if showColorwheel:
             colorwheel = (colorwheel + config.colorwheelSpeed) % 255
             pixel[0] = rainbowio.colorwheel(colorwheel)
-        elif not config.keepLedOn:
+        elif config.keepLedOn:
+            pixel[0] = cachedColor
+        else:
             pixel[0] = 0x0
 
     time.sleep(0.01)
